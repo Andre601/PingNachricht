@@ -1,0 +1,103 @@
+#  _____ _             _   _            _          _      _     _         #
+# |  __ (_)           | \ | |          | |        (_)    | |   | |        #
+# | |__) | _ __   __ _|  \| | __ _  ___| |__  _ __ _  ___| |__ | |_       #
+# |  ___/ | '_ \ / _` | . ` |/ _` |/ __| '_ \| '__| |/ __| '_ \| __|      #
+# | |   | | | | | (_| | |\  | (_| | (__| | | | |  | | (__| | | | |_       #
+# |_|   |_|_| |_|\__, |_| \_|\__,_|\___|_| |_|_|  |_|\___|_| |_|\__|      #
+#                 __/ |                                                   #
+#  By Andre_601  |___/  Wiki:                                             #
+#                          https://github.com/Andre601/PingNachricht/wiki #
+
+#
+# Main configuration-settings for the plugin.
+#
+Settings:
+  #
+  # Options for the Playercounter.
+  #
+  PlayerCounter:
+    #
+    # Enabling/Disabling the playercounter?
+    # Please note, that your server will be shown as "outdated server" or "Outdated client", when you bover over
+    # the little ping-icon.
+    # This is because ProtocolLib uses the message, that is normaly shown on a outdated server/client.
+    # There is nothing I can do, to change that. It's a issue on Mojangs side.
+    #
+    Enabled: false
+    #
+    # This is the text, that is visible, when enabling the feature.
+    #
+    # Placeholders:
+    #   %online%   -> Current amount of players online.
+    #   %maxonline -> The max amount of players, that can join
+    #
+    Text: '&7Players: &a%online%&7/%maxonline%'
+  #
+  # Settings for the Hover-message.
+  #
+  HoverMessage:
+    #
+    # Enabling/Disabling the Hover-message?
+    #
+    Enabled: true
+    #
+    # That's the section, where you can set the hover-message of the playercount.
+    # This is normally used, to display, what players are online... But we will use that now to our
+    # advantage by creating fake-players.
+    # This section supports color and formatting-codes and some custom placeholders (see below)
+    # You can set empty lines by just using '' without any text in it.
+    #
+    # Placeholders:
+    #   %w_<world>% -> Displays the amount of players in the world <world>
+    #                  This is case-sensitive.
+    #   %online%    -> Shows the amount of players online.
+    #   %maxonline% -> Shows the max amount of players, that can join.
+    Text:
+    - '&b&m-----------------------------------'
+    - '&7This is the hovermessage for the'
+    - '&7Playercount.'
+    - '&7You can set unlimited lines of text!'
+    - '&7It also supports all kind of colors'
+    - '&7and formatting-codes!'
+    - ''
+    - '&7You can even set empty lines like above.'
+    - '&7Thank you so much for using &bPingNachricht&7!'
+    - '&b&m-----------------------------------'
+#
+# Settings for the messages of PingNachricht.
+#
+Messages:
+  #
+  # The prefix of the plugin. 'nuf said.
+  #
+  Prefix: '&7[&bPing&9Nachricht&7]'
+  #
+  # Messages, that appear in the console on startup.
+  #
+  Startup:
+    #
+    # Set this to false, if you don't want the PingNachricht-banner in the console (same like on top of this
+    # config.
+    #
+    ShowBanner: true
+    #
+    # If ProtocolLib wasn't found.
+    #
+    NoProtcolLib: |-
+      &fProtocolLib is required, to use this plugin!
+      &fPlease download the right version for your server from here:
+      &fhttps://www.spigotmc.org/resources/protocollib.1997/
+    PluginEnabled: '&bPingNachricht &fsuccessfully enabled!'
+  Errors:
+    NoPermissions: '&cYou don''t have permissions for that!'
+    NoPlayer: '&cThe console is not a player!'
+    PlayerCounterDisabled: |-
+      &7The PlayerCounter is set to &cfalse &7in the config.yml!
+      &7The changes got saved, but won't take effect, until you enable the option.
+  Notifications:
+    Me:
+      PluginReloaded: '&aPlugin reloaded successfully!'
+      PlayerCountChanged: '&7Changed playercount to: %msg%'
+    Other:
+      PluginReloaded: '&b%player% &7reloaded the plugin!'
+      PlayerCountChanged: '&b%player% &7changed the playercount to: %msg%'
