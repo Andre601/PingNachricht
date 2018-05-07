@@ -1,7 +1,7 @@
-package com.andre601.manager;
+package com.andre601.pingnachricht.manager;
 
-import com.andre601.PingNachrichtMain;
-import com.andre601.util.MessageUtil;
+import com.andre601.pingnachricht.PingNachrichtMain;
+import com.andre601.pingnachricht.util.MessageUtil;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.ListenerOptions;
@@ -9,12 +9,10 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
 
-public class PlayerCount extends JavaPlugin implements Listener {
+public class PlayerCount {
 
     private static String getPlayerCount(){
         return PingNachrichtMain.config().getString("Settings.PlayerCounter.Text");

@@ -84,9 +84,23 @@ Messages:
     # If ProtocolLib wasn't found.
     #
     NoProtcolLib: |-
-      &fProtocolLib is required, to use this plugin!
-      &fPlease download the right version for your server from here:
-      &fhttps://www.spigotmc.org/resources/protocollib.1997/
+      &fProtocolLib is required, to use this plugin!'
+      &fPlease download the right version for your server from here:'
+      &fhttps://www.spigotmc.org/resources/protocollib.1997/'
+      &f
+      &fHere are some server-informations to help you get the right version:'
+      &fServer-type: &b%servertype%'
+      &fServer-version: %serverversion%'
+    #
+    # Send, if the plugin ServerListPlus (https://www.spigotmc.org/resources/serverlistplus.241/)
+    # was found.
+    # SLP already can change the playercounter and hovermessage.
+    # PingNachricht will disable itself to prevent any issues with SLP.
+    #
+    ServerListPlus: |-
+      &fThe plugin &bServerListPlus &f was found!'
+      &fYou don''t need PingNachricht, if this plugin is already running.'
+      &fPingNachricht disables itself, to prevent issues...'
     PluginEnabled: '&bPingNachricht &fsuccessfully enabled!'
   Errors:
     NoPermissions: '&cYou don''t have permissions for that!'

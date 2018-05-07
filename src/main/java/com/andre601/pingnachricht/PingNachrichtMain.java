@@ -1,8 +1,8 @@
-package com.andre601;
+package com.andre601.pingnachricht;
 
-import com.andre601.manager.HoverMessage;
-import com.andre601.manager.PlayerCount;
-import com.andre601.util.MessageUtil;
+import com.andre601.pingnachricht.manager.HoverMessage;
+import com.andre601.pingnachricht.manager.PlayerCount;
+import com.andre601.pingnachricht.util.MessageUtil;
 import com.google.common.io.ByteStreams;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -23,8 +23,15 @@ public class PingNachrichtMain extends JavaPlugin {
 
         //  If ProtocolLib isn't enabled, send error-message, disable plugin and return.
         if(!pm.isPluginEnabled("ProtocolLib")) {
-            this.getLogger().severe(MessageUtil.color(
+            getLogger().severe(MessageUtil.color(
                     config().getString("Messages.Startup.NoProtocolLib")
+            ));
+            pm.disablePlugin(this);
+            return;
+        }else
+        if(pm.isPluginEnabled("ServerListPlus")) {
+            getLogger().severe(MessageUtil.color(
+                    config().getString("Messages.Startup.ServerListPlus")
             ));
             pm.disablePlugin(this);
             return;
@@ -36,13 +43,19 @@ public class PingNachrichtMain extends JavaPlugin {
         //  Starting the void to create the file
         setupFile();
 
-        //  Registering the events in HoverMessgae.java and PlayerCount.java.
-        pm.registerEvents(new HoverMessage(), this);
-        pm.registerEvents(new PlayerCount(), this);
-
         //  Doesn't send the banner, if "ShowBanner" in the config.yml is set to false.
         if(config().getBoolean("Messages.Startup.ShowBanner"))
             sendBanner();
+
+        if(config().getBoolean("Settings.HoverMessage.Enabled")) {
+            getLogger().info("Setting up HoverMessage...");
+            HoverMessage.setHover();
+        }
+
+        if(config().getBoolean("Settings.PlayerCounter.Enabled")){
+            getLogger().info("Setting up PlayerCounter...");
+            PlayerCount.setPlayerCount();
+        }
     }
 
     //  Returning instance, which was set in onEnable()
@@ -88,22 +101,22 @@ public class PingNachrichtMain extends JavaPlugin {
     }
 
     //  Sends the PingNachricht-Banner (similar to that in the config.yml) in the console.
-    private static void sendBanner(){
-        PingNachrichtMain.getInstance().getLogger().info(
+    private void sendBanner(){
+        getLogger().info(
                 MessageUtil.color("&b _____ _             &9_   _            _          _      _     _"));
-        PingNachrichtMain.getInstance().getLogger().info(
+        getLogger().info(
                 MessageUtil.color("&b|  __ (_)           &9| \\ | |          | |        (_)    | |   | |"));
-        PingNachrichtMain.getInstance().getLogger().info(
+        getLogger().info(
                 MessageUtil.color("&b| |__) | _ __   __ _&9|  \\| | __ _  ___| |__  _ __ _  ___| |__ | |_"));
-        PingNachrichtMain.getInstance().getLogger().info(
+        getLogger().info(
                 MessageUtil.color("&b|  ___/ | '_ \\ / _` &9| . ` |/ _` |/ __| '_ \\| '__| |/ __| '_ \\| __|"));
-        PingNachrichtMain.getInstance().getLogger().info(
+        getLogger().info(
                 MessageUtil.color("&b| |   | | | | | (_| &9| |\\  | (_| | (__| | | | |  | | (__| | | | |_"));
-        PingNachrichtMain.getInstance().getLogger().info(
+        getLogger().info(
                 MessageUtil.color("&b|_|   |_|_| |_|\\__, &9|_| \\_|\\__,_|\\___|_| |_|_|  |_|\\___|_| |_|\\__|"));
-        PingNachrichtMain.getInstance().getLogger().info(
+        getLogger().info(
                 MessageUtil.color("&b                __/ |"));
-        PingNachrichtMain.getInstance().getLogger().info(
+        getLogger().info(
                 MessageUtil.color("&b               |___/"));
     }
 

@@ -1,4 +1,4 @@
-package com.andre601.util;
+package com.andre601.pingnachricht.util;
 
 public class MessageUtil {
 
