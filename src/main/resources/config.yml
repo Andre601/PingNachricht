@@ -1,13 +1,16 @@
-#  _____ _             _   _            _          _      _     _         #
-# |  __ (_)           | \ | |          | |        (_)    | |   | |        #
-# | |__) | _ __   __ _|  \| | __ _  ___| |__  _ __ _  ___| |__ | |_       #
-# |  ___/ | '_ \ / _` | . ` |/ _` |/ __| '_ \| '__| |/ __| '_ \| __|      #
-# | |   | | | | | (_| | |\  | (_| | (__| | | | |  | | (__| | | | |_       #
-# |_|   |_|_| |_|\__, |_| \_|\__,_|\___|_| |_|_|  |_|\___|_| |_|\__|      #
-#                 __/ |                                                   #
-#  By Andre_601  |___/  Wiki:                                             #
-#                          https://github.com/Andre601/PingNachricht/wiki #
-
+#  _____ _             _   _            _          _      _     _
+# |  __ (_)           | \ | |          | |        (_)    | |   | |
+# | |__) | _ __   __ _|  \| | __ _  ___| |__  _ __ _  ___| |__ | |_
+# |  ___/ | '_ \ / _` | . ` |/ _` |/ __| '_ \| '__| |/ __| '_ \| __|
+# | |   | | | | | (_| | |\  | (_| | (__| | | | |  | | (__| | | | |_
+# |_|   |_|_| |_|\__, |_| \_|\__,_|\___|_| |_|_|  |_|\___|_| |_|\__|
+#                 __/ |
+#  By Andre_601  |___/  Source:
+#                         https://github.com/Andre601/PingNachricht
+#
+#                       Wiki:
+#                         https://github.com/Andre601/PingNachricht/wiki
+#
 #
 # Main configuration-settings for the plugin.
 #
@@ -84,24 +87,23 @@ Messages:
     # If ProtocolLib wasn't found.
     #
     NoProtcolLib: |-
-      &fProtocolLib is required, to use this plugin!'
-      &fPlease download the right version for your server from here:'
-      &fhttps://www.spigotmc.org/resources/protocollib.1997/'
-      &f
-      &fHere are some server-informations to help you get the right version:'
-      &fServer-type: &b%servertype%'
-      &fServer-version: %serverversion%'
+      &fProtocolLib is required, to use this plugin!
+      &fPlease download the right version for your server from here:
+      &fhttps://www.spigotmc.org/resources/protocollib.1997/
     #
-    # Send, if the plugin ServerListPlus (https://www.spigotmc.org/resources/serverlistplus.241/)
+    # This message will be send, if the plugin ServerListPlus (https://www.spigotmc.org/resources/serverlistplus.241/)
     # was found.
     # SLP already can change the playercounter and hovermessage.
-    # PingNachricht will disable itself to prevent any issues with SLP.
+    # PingNachricht will disable itself to prevent any conflicts with SLP.
     #
     ServerListPlus: |-
-      &fThe plugin &bServerListPlus &f was found!'
-      &fYou don''t need PingNachricht, if this plugin is already running.'
-      &fPingNachricht disables itself, to prevent issues...'
+      &fThe plugin &bServerListPlus &fwas found!
+      &fYou don't need PingNachricht, if this plugin is already running.
+      &fPingNachricht disables itself, to prevent issues...
     PluginEnabled: '&bPingNachricht &fsuccessfully enabled!'
+  #
+  # Error-messages for certain situations.
+  #
   Errors:
     NoPermissions: '&cYou don''t have permissions for that!'
     NoPlayer: '&cThe console is not a player!'
@@ -109,9 +111,17 @@ Messages:
       &7The PlayerCounter is set to &cfalse &7in the config.yml!
       &7The changes got saved, but won't take effect, until you enable the option.
   Notifications:
-    Me:
+    #
+    # Message for the player, that executed the command.
+    #
+    CommandExecutor:
       PluginReloaded: '&aPlugin reloaded successfully!'
       PlayerCountChanged: '&7Changed playercount to: %msg%'
+    #
+    # Message that all players with the right permission (pingnachricht.notification.<type>) receive.
+    # See the wiki for the permissions: https://github.com/andre601/pingnachricht/wiki/permissions
+    #
     Other:
       PluginReloaded: '&b%player% &7reloaded the plugin!'
       PlayerCountChanged: '&b%player% &7changed the playercount to: %msg%'
+      FileChanged: '&7The config.yml has changed!'

@@ -22,14 +22,15 @@ public class PingNachrichtMain extends JavaPlugin {
         PluginManager pm = Bukkit.getPluginManager();
 
         //  If ProtocolLib isn't enabled, send error-message, disable plugin and return.
-        if(!pm.isPluginEnabled("ProtocolLib")) {
+        if(!pm.getPlugin("ProtocolLib").isEnabled()) {
             getLogger().severe(MessageUtil.color(
                     config().getString("Messages.Startup.NoProtocolLib")
             ));
             pm.disablePlugin(this);
             return;
         }else
-        if(pm.isPluginEnabled("ServerListPlus")) {
+        //  If ServerListPlus is enabled, disable PingNachricht to prevent any conflicts.
+        if(pm.getPlugin("ServerListPlus").isEnabled()) {
             getLogger().severe(MessageUtil.color(
                     config().getString("Messages.Startup.ServerListPlus")
             ));

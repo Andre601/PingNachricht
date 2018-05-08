@@ -1,0 +1,41 @@
+name: PingNachricht
+version: 2.6
+author: Andre_601
+
+main: com.andre601.pingnachricht.PingNachrichtMain
+
+commands:
+  PingNachricht:
+    description: Command for PingNachricht
+    usage: <command>
+    aliases: [pn]
+
+permissions:
+  pingnachricht.*:
+    description: Gives access to all PingNachricht-commands
+    default: op
+    children:
+      pingnachricht.help: true
+      pingnachricht.reload: true
+      pingnachricht.notification.*: true
+  pingnachricht.notification.*:
+    description: Notifies you of any changes in PingNachricht
+    default: op
+    children:
+      pingnachricht.notification.playercounter: true
+      pingnachricht.notification.file: true
+      pingnachricht.notification.reload: true
+  pingnachricht.help:
+    description: Gives access to /pn help
+    default: op
+  pingnachricht.reload:
+    description: Lets you reload the plugin
+    default: op
+  pingnachricht.notification.playercounter:
+    description: Notifies you of changes with the PlayerCounter
+    default: op
+  pingnachricht.notification.file:
+    description: Notifies you of changes with the config.yml
+    default: op
+  pingnachricht.notification.reload:
+    description: Notifies you about reloads of the plugin
