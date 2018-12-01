@@ -8,9 +8,10 @@
 #  By Andre_601  |___/  Source:
 #                         https://github.com/Andre601/PingNachricht
 #
-#                       Wiki:
-#                         https://github.com/Andre601/PingNachricht/wiki
-#
+#    Wiki:
+#      Main page:   https://github.com/Andre601/PingNachricht/wiki
+#      Setup:       https://github.com/Andre601/PingNachricht/wiki/setup
+#      Permissions: https://github.com/Andre601/PingNachricht/wiki/permissions
 #
 # Main configuration-settings for the plugin.
 #
@@ -55,6 +56,9 @@ Settings:
     #                  This is case-sensitive.
     #   %online%    -> Shows the amount of players online.
     #   %maxonline% -> Shows the max amount of players, that can join.
+    #
+    # Placeholders from PlaceholderAPI are supported, as long as they aren't player-related (like %player_name%)
+    #
     Text:
     - '&b&m-----------------------------------'
     - '&7This is the hovermessage for the'
@@ -79,49 +83,66 @@ Messages:
   #
   Startup:
     #
-    # Set this to false, if you don't want the PingNachricht-banner in the console (same like on top of this
-    # config.
+    # Set this to false, if you don't want the PingNachricht-banner in the console (same like on top of this config.)
     #
     ShowBanner: true
     #
     # If ProtocolLib wasn't found.
+    # PingNachricht requires ProtocolLib, to actually work.
     #
-    NoProtcolLib: |-
-      &fProtocolLib is required, to use this plugin!
-      &fPlease download the right version for your server from here:
-      &fhttps://www.spigotmc.org/resources/protocollib.1997/
+    # Placeholders:
+    #   %mcversion%  -> Returns the Server-version.
+    #   %apiversion% -> Returns the API-version
+    #
+    NoProtcolLib:
+    - '&fProtocolLib wasn''t found! It is required for PingNachricht to work.'
+    - '&fPlease download the right version for your server from here:'
+    - '&fhttps://www.spigotmc.org/resources/protocollib.1997/'
+    - ''
+    - '&fHere is some information, to make sure, that you use the right version:'
+    - '&fMinecraft-Version: &b%mcversion%'
+    - '&fAPI-version: &b%apiversion%'
     #
     # This message will be send, if the plugin ServerListPlus (https://www.spigotmc.org/resources/serverlistplus.241/)
     # was found.
     # SLP already can change the playercounter and hovermessage.
     # PingNachricht will disable itself to prevent any conflicts with SLP.
     #
-    ServerListPlus: |-
-      &fThe plugin &bServerListPlus &fwas found!
-      &fYou don't need PingNachricht, if this plugin is already running.
-      &fPingNachricht disables itself, to prevent issues...
+    ServerListPlus:
+    - '&fThe plugin &bServerListPlus &fwas found!'
+    - '&fYou don''t need PingNachricht, if this plugin is already running.'
+    - '&fPingNachricht disables itself, to prevent issues...'
+    #
+    # Plugin enabled message
+    #
     PluginEnabled: '&bPingNachricht &fsuccessfully enabled!'
   #
   # Error-messages for certain situations.
   #
   Errors:
+    #
+    # No permission message
+    #
     NoPermissions: '&cYou don''t have permissions for that!'
+    #
+    # Running /pn in the console
+    #
     NoPlayer: '&cThe console is not a player!'
-    PlayerCounterDisabled: |-
-      &7The PlayerCounter is set to &cfalse &7in the config.yml!
-      &7The changes got saved, but won't take effect, until you enable the option.
+  #
+  # Messages for certain notifications
+  #
   Notifications:
     #
     # Message for the player, that executed the command.
     #
     CommandExecutor:
+      AttemptReload: '&7Reloading config.yml'
       PluginReloaded: '&aPlugin reloaded successfully!'
-      PlayerCountChanged: '&7Changed playercount to: %msg%'
     #
-    # Message that all players with the right permission (pingnachricht.notification.<type>) receive.
-    # See the wiki for the permissions: https://github.com/andre601/pingnachricht/wiki/permissions
+    # Message that all players with the permission pingnachricht.notification.reload receive.
+    #
+    # Placeholder:
+    #   %player% -> Player that executed /pn reload
     #
     Other:
       PluginReloaded: '&b%player% &7reloaded the plugin!'
-      PlayerCountChanged: '&b%player% &7changed the playercount to: %msg%'
-      FileChanged: '&7The config.yml has changed!'

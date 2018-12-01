@@ -1,20 +1,22 @@
 package com.andre601.pingnachricht.util;
 
+import com.andre601.pingnachricht.PingNachricht;
+import org.bukkit.ChatColor;
+
 public class MessageUtil {
 
-    /*
-    * System to convert &[code] into the corresponding color (§[code])
-    * This was used from LuckPerms (https://github.com/lucko/LuckPerms)
-     */
-    public static String color(String s){
-        char[] b = s.toCharArray();
+    private PingNachricht plugin;
 
-        for(int i = 0; i < b.length - 1; ++i){
-            if(b[i] == '&' && "0123456789AaBbCcDdEeFfKkLlMmNnOoRr".indexOf(b[i + 1]) > -1){
-                b[i] = 167;
-                b[i + 1] = Character.toLowerCase(b[i + 1]);
-            }
-        }
-        return new String(b);
+    public MessageUtil(PingNachricht plugin){
+        this.plugin = plugin;
     }
+
+    private String prefix = "&f[&bPing&9Nachricht&f] ";
+
+    public void sendMsg(String msg){
+        plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes(
+                '&', prefix + msg
+        ));
+    }
+
 }

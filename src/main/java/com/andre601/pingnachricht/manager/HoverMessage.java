@@ -1,33 +1,33 @@
 package com.andre601.pingnachricht.manager;
 
-import com.andre601.pingnachricht.PingNachrichtMain;
-import com.andre601.pingnachricht.util.MessageUtil;
+import com.andre601.pingnachricht.PingNachricht;
+import com.andre601.pingnachricht.util.config.ConfigKeys;
 import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.ListenerOptions;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.WrappedGameProfile;
+import com.comphenix.protocol.wrappers.WrappedServerPing;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class HoverMessage {
 
-    private static List<WrappedGameProfile> msg = new ArrayList<WrappedGameProfile>();
+    private PingNachricht plugin;
 
-    /*
-    * This string will be used for ProtocolLib.
-    * We register the stuff with this String as UUID.
-     */
-    private static String protocolID = PingNachrichtMain.getNameAndVersion().replace(" ", "_");
+    public HoverMessage(PingNachricht plugin){
+        this.plugin = plugin;
+    }
 
-    private static void getMessage(){
-        for(String str : PingNachrichtMain.config().getStringList("Settings.HoverMessage.Text")){
+    private UUID uuid = UUID.fromString("PingUUID-0002-0006-0000-authAndre601");
+
+    private static List<WrappedGameProfile> msg = new ArrayList<>();
+
+    private void getMessage(){
+        for(String str : ConfigKeys.HOVERMESSAGE.getStringList()){
             for(World w : Bukkit.getWorlds()){
                 if(str.contains("%w_" + w.getName() + "%")){
                     str = str.replace("%w_" + w.getName() + "%", String.valueOf(w.getPlayers().size()))
@@ -35,22 +35,24 @@ public class HoverMessage {
                     .replace("%maxonline%", String.valueOf(Bukkit.getServer().getMaxPlayers()));
                 }
             }
-            msg.add(new WrappedGameProfile(protocolID, MessageUtil.color(str)));
+            if(plugin.isPapiEnabled()) PlaceholderAPI.setPlaceholders(null, str);
         }
     }
 
-    public static void setHover(){
+    public void setHover(){
         getMessage();
 
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(PingNachrichtMain.getInstance(),
-                ListenerPriority.NORMAL, Arrays.asList(new PacketType[] {
-                        PacketType.Status.Server.OUT_SERVER_INFO
-                }), new ListenerOptions[] {
-                ListenerOptions.ASYNC
-        }) {
+        plugin.getProtocolManager().addPacketListener(new PacketAdapter(
+                plugin,
+                ListenerPriority.NORMAL,
+                Arrays.asList(new PacketType[] {
+                        PacketType.Status.Server.SERVER_INFO
+                })
+        ){
             @Override
-            public void onPacketReceiving(PacketEvent e) {
-                e.getPacket().getServerPings().read(0).setPlayers(msg);
+            public void onPacketSending(PacketEvent event){
+
+                event.getPacket().getServerPings().read(0).setPlayers(msg);
             }
         });
     }

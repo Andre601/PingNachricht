@@ -1,10 +1,9 @@
 package com.andre601.pingnachricht.manager;
 
-import com.andre601.pingnachricht.PingNachrichtMain;
-import com.andre601.pingnachricht.util.MessageUtil;
+import com.andre601.pingnachricht.PingNachricht;
+import com.andre601.pingnachricht.util.config.ConfigKeys;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.ListenerOptions;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
@@ -14,25 +13,34 @@ import java.util.Arrays;
 
 public class PlayerCount {
 
-    private static String getPlayerCount(){
-        return PingNachrichtMain.config().getString("Settings.PlayerCounter.Text");
+    private PingNachricht plugin;
+
+    public PlayerCount(PingNachricht plugin){
+        this.plugin = plugin;
     }
 
-    public static void setPlayerCount(){
-        final String pc = getPlayerCount();
+    private String getPlayerCount(){
+        return ConfigKeys.PLAYERCOUNT.getString(true);
+    }
 
-        pc.replace("%online%", String.valueOf(Bukkit.getServer().getOnlinePlayers().size()))
+    public void setPlayerCount(){
+        String playerCount = getPlayerCount();
+
+        playerCount = playerCount.replace("%online%", String.valueOf(Bukkit.getServer().getOnlinePlayers().size()))
                 .replace("%maxonline%", String.valueOf(Bukkit.getServer().getMaxPlayers()));
 
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(PingNachrichtMain.getInstance(),
-                ListenerPriority.NORMAL, Arrays.asList(new PacketType[] {
-                PacketType.Status.Server.OUT_SERVER_INFO
-        }), new ListenerOptions[] {
-                ListenerOptions.ASYNC
-        }) {
+        final String finalPlayerCount = playerCount;
+
+        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(
+                plugin,
+                ListenerPriority.NORMAL,
+                Arrays.asList(new PacketType[] {
+                        PacketType.Status.Server.SERVER_INFO
+                })
+        ) {
             @Override
             public void onPacketReceiving(PacketEvent e) {
-                e.getPacket().getServerPings().read(0).setVersionName(MessageUtil.color(pc));
+                e.getPacket().getServerPings().read(0).setVersionName(finalPlayerCount);
                 e.getPacket().getServerPings().read(0).setVersionProtocol(-1);
             }
         });
